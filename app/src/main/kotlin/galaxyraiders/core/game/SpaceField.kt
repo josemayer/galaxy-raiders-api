@@ -76,6 +76,12 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
   }
 
+  fun trimExplosions() {
+    this.explosions = this.explosions.filter {
+      it.isTriggered()
+    }
+  }
+
   fun generateExplosion(position: Point2D, radius: Double, timeToLive: Double) {
     explosions += Explosion(position, radius, timeToLive)
   }

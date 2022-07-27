@@ -15,4 +15,8 @@ class Explosion(initialPosition: Point2D, radius: Double, timeToLive: Double):
     }
     this.time_remaining -= 1.0
   }
+
+  fun isTriggered(): Boolean {
+    return this.is_triggered
+  }
 }
