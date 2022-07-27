@@ -1,11 +1,13 @@
 package galaxyraiders.core.physics
-import kotlin.math.sqrt
-import kotlin.math.atan2
-import kotlin.math.PI
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 @JsonIgnoreProperties("unit", "normal", "degree", "magnitude")
+
+const val DEGREE_CONVERSION = 180.0 / PI
+
 data class Vector2D(val dx: Double, val dy: Double) {
   override fun toString(): String {
     return "Vector2D(dx=$dx, dy=$dy)"
@@ -18,7 +20,7 @@ data class Vector2D(val dx: Double, val dy: Double) {
     get() = atan2(this.dy, this.dx)
 
   val degree: Double
-    get() = this.radiant * 180 / PI
+    get() = this.radiant * DEGREE_CONVERSION
 
   val unit: Vector2D
     get() = Vector2D(this.dx / this.magnitude, this.dy / this.magnitude)

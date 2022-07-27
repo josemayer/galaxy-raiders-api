@@ -94,11 +94,11 @@ class GameEngine(
     this.field.spaceObjects.forEachPair {
         (first, second) ->
       if (first.impacts(second)) {
-      	if (first is Asteroid) {
-      	  this.field.generateExplosion(first.center, first.radius, GameEngineConfig.explosionDuration)
-      	} else if (second is Asteroid) {
-      	  this.field.generateExplosion(second.center, second.radius, GameEngineConfig.explosionDuration)
-      	}
+        if (first is Asteroid) {
+          this.field.generateExplosion(first.center, first.radius, GameEngineConfig.explosionDuration)
+        } else if (second is Asteroid) {
+          this.field.generateExplosion(second.center, second.radius, GameEngineConfig.explosionDuration)
+        }
         first.collideWith(second, GameEngineConfig.coefficientRestitution)
       }
     }
