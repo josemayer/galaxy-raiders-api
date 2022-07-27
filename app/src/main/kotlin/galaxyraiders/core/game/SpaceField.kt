@@ -83,8 +83,9 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   }
 
   private fun standardShipPosition(): Point2D {
-    return Point2D(x = this.width / 2.0, y = 1.0)
+    return Point2D(x = 1.0, y = 1.0)
   }
+
 
   private fun standardShipVelocity(): Vector2D {
     return Vector2D(dx = 0.0, dy = 0.0)
@@ -100,11 +101,13 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   }
 
   private fun defineMissilePosition(missileRadius: Double): Point2D {
-    return ship.center + Vector2D(dx = 0.0, dy = ship.radius + missileRadius + SpaceFieldConfig.missileDistanceFromShip)
+    return ship.center + Vector2D(
+      dx = ship.radius + missileRadius + SpaceFieldConfig.missileDistanceFromShip,
+      dy = 0.0)
   }
 
   private fun defineMissileVelocity(): Vector2D {
-    return Vector2D(dx = 0.0, dy = 1.0)
+    return Vector2D(dx = 1.0, dy = 0.0)
   }
 
   private fun createAsteroidWithRandomProperties(): Asteroid {
