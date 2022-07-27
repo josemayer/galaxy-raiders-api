@@ -17,6 +17,7 @@ object GameEngineConfig {
   val spaceFieldHeight = config.get<Int>("SPACEFIELD_HEIGHT")
   val asteroidProbability = config.get<Double>("ASTEROID_PROBABILITY")
   val coefficientRestitution = config.get<Double>("COEFFICIENT_RESTITUTION")
+  val explosionDuration = config.get<Double>("EXPLOSION_DURATION")
 
   val msPerFrame: Int = MILLISECONDS_PER_SECOND / this.frameRate
 }
@@ -88,6 +89,11 @@ class GameEngine(
     this.field.spaceObjects.forEachPair {
         (first, second) ->
       if (first.impacts(second)) {
+      	if (first is Asteroid) {
+      	  this.field.generateExplosion(first.center, first.radius, GameEngineConfig.explosionDuration)
+      	} else if (second is Asteroid) {
+      	  this.field.generateExplosion(second.center, second.radius, GameEngineConfig.explosionDuration)
+      	}
         first.collideWith(second, GameEngineConfig.coefficientRestitution)
       }
     }
