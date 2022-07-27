@@ -4,10 +4,9 @@ import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-@JsonIgnoreProperties("unit", "normal", "degree", "magnitude")
-
 const val DEGREE_CONVERSION = 180.0 / PI
 
+@JsonIgnoreProperties("unit", "normal", "degree", "magnitude")
 data class Vector2D(val dx: Double, val dy: Double) {
   override fun toString(): String {
     return "Vector2D(dx=$dx, dy=$dy)"
