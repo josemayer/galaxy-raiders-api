@@ -27,23 +27,50 @@ object SpaceFieldConfig {
 
 @Suppress("TooManyFunctions")
 data class SpaceField(val width: Int, val height: Int, val generator: RandomGenerator) {
-  val ship = initializeShip()
+  val boundaryX = 0.0..width.toDouble()
+  val boundaryY = 0.0..height.toDouble()
 
-  var asteroids: List<Asteroid> = emptyList()
-    private set
+  val ship = initializeShip()
 
   var missiles: List<Missile> = emptyList()
     private set
 
-  val spaceObjects: List<SpaceObject>
-    get() = listOf(ship) + asteroids + missiles
+  var asteroids: List<Asteroid> = emptyList()
+    private set
 
-  fun generateAsteroid() {
-    asteroids += createAsteroidWithRandomProperties()
+  val spaceObjects: List<SpaceObject>
+    get() = listOf(this.ship) + this.missiles + this.asteroids
+
+  fun moveShip() {
+    this.ship.move(boundaryX, boundaryY)
+  }
+
+  fun moveMissiles() {
+    this.missiles.forEach { it.move() }
+  }
+
+  fun moveAsteroids() {
+    this.asteroids.forEach { it.move() }
   }
 
   fun generateMissile() {
-    missiles += createMissile()
+    this.missiles += this.createMissile()
+  }
+
+  fun generateAsteroid() {
+    this.asteroids += this.createAsteroidWithRandomProperties()
+  }
+
+  fun trimMissiles() {
+    this.missiles = this.missiles.filter {
+      it.inBoundaries(this.boundaryX, this.boundaryY)
+    }
+  }
+
+  fun trimAsteroids() {
+    this.asteroids = this.asteroids.filter {
+      it.inBoundaries(this.boundaryX, this.boundaryY)
+    }
   }
 
   private fun initializeShip(): SpaceShip {
